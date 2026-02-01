@@ -1,0 +1,45 @@
+# Test files - don't upload to GitHub
+test_*.php
+*_test.php
+debug_*.php
+generate_password.php
+phpinfo.php
+
+# Storage files - generated at runtime
+storage/backups/*
+storage/invoices/*
+
+# Keep the folders but ignore their contents
+!storage/backups/.gitkeep
+!storage/invoices/.gitkeep
+
+# IDE and editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# PHP temporary files
+*.log
+*.tmp
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# Environment configuration
+.env
+config_local.php
+
+# Dependencies
+vendor/
+node_modules/
+
+# Database sensitive info (if you create a separate config later)
+# database_credentials.php
