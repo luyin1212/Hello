@@ -153,7 +153,7 @@ $db = Database::getInstance();
             <div class="card-body">
                 <div class="row text-center">
                     <div class="col-md-3 mb-3">
-                        <a href="#" class="btn btn-outline-primary btn-lg w-100 disabled">
+                        <a href="<?= getBaseURL() ?>/public/products/add.php" class="btn btn-outline-primary btn-lg w-100">
                             <i class="bi bi-plus-circle"></i><br>
                             Add Product
                         </a>
@@ -177,9 +177,6 @@ $db = Database::getInstance();
                         </a>
                     </div>
                 </div>
-                <p class="text-muted text-center mb-0 small">
-                    <i class="bi bi-info-circle"></i> Additional features will be available as modules are implemented
-                </p>
             </div>
         </div>
     </div>

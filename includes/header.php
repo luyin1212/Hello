@@ -64,7 +64,7 @@ $currentRole = $user->getRole() ?? 'user';
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="<?= getBaseURL() ?>/public/products/index.php">
                         <i class="bi bi-box"></i> Products
                     </a>
                 </li>
