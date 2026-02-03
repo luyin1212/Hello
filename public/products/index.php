@@ -46,6 +46,16 @@ $error = $_GET['error'] ?? '';
         <i class="bi bi-check-circle-fill"></i> Product added successfully!
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     </div>
+<?php elseif ($success == 'updated'): ?>
+    <div class="alert alert-success alert-dismissible fade show">
+        <i class="bi bi-check-circle-fill"></i> Product updated successfully!
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+<?php elseif ($success == 'deleted'): ?>
+    <div class="alert alert-success alert-dismissible fade show">
+        <i class="bi bi-check-circle-fill"></i> Product deleted successfully!
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
 <?php elseif ($error): ?>
     <div class="alert alert-danger alert-dismissible fade show">
         <i class="bi bi-exclamation-triangle-fill"></i> <?= e($error) ?>
@@ -125,7 +135,17 @@ $error = $_GET['error'] ?? '';
                                     <?php endif; ?>
                                 </td>
                                 <td>
-                                    <span class="badge bg-secondary">Edit/Delete tomorrow</span>
+                                    <a href="edit.php?id=<?= $p['productID'] ?>"
+                                       class="btn btn-sm btn-warning"
+                                       title="Edit">
+                                       <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <a href="delete.php?id=<?= $p['productID'] ?>"
+                                       class="btn btn-sm btn-danger"
+                                       onclick="return confirm('Are you sure you want to delete this product?')"
+                                       title="Delete">
+                                       <i class="bi bi-trash"></i>
+                                    </a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
