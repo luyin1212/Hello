@@ -69,6 +69,11 @@ $currentRole = $user->getRole() ?? 'user';
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="<?= getBaseURL() ?>/public/Sales/index.php">
+                        <i class="bi bi-cart-check"></i> Sales
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="#">
                         <i class="bi bi-receipt"></i> Invoices
                     </a>
