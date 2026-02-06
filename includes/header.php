@@ -79,12 +79,12 @@ $currentRole = $user->getRole() ?? 'user';
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="<?= getBaseURL() ?>/public/alerts/index.php">
                         <i class="bi bi-exclamation-triangle"></i> Alerts
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="<?= getBaseURL() ?>/public/reports/index.php">
                         <i class="bi bi-graph-up"></i> Reports
                     </a>
                 </li>

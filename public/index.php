@@ -9,6 +9,16 @@ require_once __DIR__ . '/../config/config.php';
 // Include header (this will check authentication)
 include_once __DIR__ . '/../includes/header.php';
 
+// Create objects for statistics
+$productObj = new Product();
+$invoiceObj = new Invoice();
+$alertObj = new Alert();
+
+// Get statistics
+$totalProducts = $productObj->getTotalProducts();
+$totalInvoices = $invoiceObj->getTotalInvoices();
+$totalAlerts = $alertObj->getTotalAlerts();
+
 // Get current user info
 $currentUser = new User();
 $username = $currentUser->getUsername();
@@ -159,7 +169,7 @@ $db = Database::getInstance();
                         </a>
                     </div>
                     <div class="col-md-3 mb-3">
-                        <a href="#" class="btn btn-outline-success btn-lg w-100 disabled">
+                        <a href="<?= getBaseURL() ?>/public/invoices/create.php" class="btn btn-outline-success btn-lg w-100 disabled">
                             <i class="bi bi-receipt"></i><br>
                             Create Invoice
                         </a>
