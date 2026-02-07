@@ -91,17 +91,34 @@ $currentRole = $user->getRole() ?? 'user';
             </ul>
             
             <!-- User Menu -->
-            <div class="d-flex align-items-center">
-                <span class="text-white me-3">
-                    <i class="bi bi-person-circle"></i> <?= e($currentUsername) ?>
-                    <?php if ($currentRole == 'admin'): ?>
-                        <span class="badge bg-warning text-dark">Admin</span>
-                    <?php endif; ?>
-                </span>
-                <a href="<?= getBaseURL() ?>/public/auth/logout.php" class="btn btn-outline-light btn-sm">
-                    <i class="bi bi-box-arrow-right"></i> Logout
-                </a>
-            </div>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-person-circle"></i> <?= e($currentUsername) ?>
+                        <?php if ($currentRole == 'admin'): ?>
+                            <span class="badge bg-warning text-dark">Admin</span>
+                        <?php endif; ?>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li>
+                            <a class="dropdown-item" href="<?= getBaseURL() ?>/public/profile/index.php">
+                                <i class="bi bi-person-badge"></i> My Profile
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="<?= getBaseURL() ?>/public/profile/change-password.php">
+                                <i class="bi bi-key"></i> Change Password
+                            </a>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <a class="dropdown-item" href="<?= getBaseURL() ?>/public/auth/logout.php">
+                                <i class="bi bi-box-arrow-right"></i> Logout
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
         </div>
     </div>
 </nav>

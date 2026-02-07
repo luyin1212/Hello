@@ -63,10 +63,10 @@ class User {
             // This compares the entered password with the hashed password in database
             if (password_verify($password, $user['password'])) {
                 // Login successful - store user info in session
-                $_SESSION['user_id'] = $user['userID'];
+                $_SESSION['userID'] = $user['userID'];
                 $_SESSION['username'] = $user['username'];
                 $_SESSION['role'] = $user['role'];
-                $_SESSION['logged_in'] = true;
+                $_SESSION['loggedin'] = true;
                 
                 // Also store in object properties
                 $this->userID = $user['userID'];
@@ -118,8 +118,8 @@ class User {
      * @return int|null User ID or null if not logged in
      */
     public function getUserID() {
-        if (isset($_SESSION['user_id'])) {
-            return $_SESSION['user_id'];
+        if (isset($_SESSION['userID'])) {
+            return $_SESSION['userID'];
         }
         return null;
     }
@@ -194,9 +194,35 @@ class User {
             session_start();
         }
         
-        if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] != true) {
+        if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
             header("Location: $loginPage");
             exit();
         }
     }
+
+        /**
+     * Get user by ID
+     * 
+     * @param int $userID User ID
+     * @return array|null User data or null if not found
+     */
+    public function getUserByID($userID) {
+        $conn = $this->db->getConnection();
+        
+        $sql = "SELECT userID, username, email, role, createdAt FROM user WHERE userID = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $userID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        if ($result->num_rows > 0) {
+            $user = $result->fetch_assoc();
+            $stmt->close();
+            return $user;
+        }
+        
+        $stmt->close();
+        return null;
+    }
+    
 }
