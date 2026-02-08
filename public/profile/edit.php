@@ -11,7 +11,7 @@ include_once __DIR__ . '/../../includes/header.php';
 
 // Get current user
 $userObj = new User();
-$currentUser = $userObj->getUserByID($_SESSION['user_ID']);
+$currentUser = $userObj->getUserByID($_SESSION['userID']);
 
 $error = '';
 $success = '';
@@ -19,13 +19,10 @@ $success = '';
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = trim($_POST['username']);
-    $email = trim($_POST['email']);
     
     // Validate
-    if (empty($username) || empty($email)) {
-        $error = 'Username and email are required.';
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $error = 'Invalid email format.';
+    if (empty($username)) {
+        $error = 'Username is required.';
     } else {
         // Check if username is taken by another user
         $conn = Database::getInstance()->getConnection();
@@ -39,15 +36,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $error = 'Username is already taken.';
         } else {
             // Update user info
-            $sql = "UPDATE user SET username = ?, email = ? WHERE userID = ?";
+            $sql = "UPDATE user SET username = ?, WHERE userID = ?";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("ssi", $username, $email, $_SESSION['userID']);
+            $stmt->bind_param("ssi", $username, $_SESSION['userID']);
             
             if ($stmt->execute()) {
                 $_SESSION['username'] = $username; // Update session
                 $success = 'Profile updated successfully!';
                 $currentUser['username'] = $username;
-                $currentUser['email'] = $email;
+                // $currentUser['email'] = $email;
             } else {
                 $error = 'Failed to update profile. Please try again.';
             }
@@ -98,18 +95,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                id="username" 
                                name="username" 
                                value="<?= e($currentUser['username']) ?>"
-                               required>
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label for="email" class="form-label">
-                            Email <span class="text-danger">*</span>
-                        </label>
-                        <input type="email" 
-                               class="form-control" 
-                               id="email" 
-                               name="email" 
-                               value="<?= e($currentUser['email']) ?>"
                                required>
                     </div>
                     

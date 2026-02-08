@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             
             $sql = "UPDATE user SET password = ? WHERE userID = ?";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("si", $hashedPassword, $_SESSION['user_ID']);
+            $stmt->bind_param("si", $hashedPassword, $_SESSION['userID']);
             
             if ($stmt->execute()) {
                 $success = 'Password changed successfully!';

@@ -11,7 +11,7 @@ include_once __DIR__ . '/../../includes/header.php';
 
 // Get current user info
 $userObj = new User();
-$currentUser = $userObj->getUserByID($_SESSION['user_id']);
+$currentUser = $userObj->getUserByID($_SESSION['userID']);
 
 if (!$currentUser) {
     redirect(getBaseURL() . '/public/auth/logout.php');
@@ -51,18 +51,10 @@ if (!$currentUser) {
                         <td><?= e($currentUser['username']) ?></td>
                     </tr>
                     <tr>
-                        <th>Email:</th>
-                        <td><?= e($currentUser['email']) ?></td>
-                    </tr>
-                    <tr>
                         <th>Role:</th>
                         <td>
                             <span class="badge bg-primary"><?= e($currentUser['role']) ?></span>
                         </td>
-                    </tr>
-                    <tr>
-                        <th>Member Since:</th>
-                        <td><?= date('d M Y', strtotime($currentUser['createdAt'])) ?></td>
                     </tr>
                 </table>
                 
@@ -109,12 +101,7 @@ if (!$currentUser) {
                     <div class="col-6 mb-3">
                         <div class="border rounded p-3">
                             <i class="bi bi-clock-history text-info" style="font-size: 2rem;"></i>
-                            <h3 class="mt-2">
-                                <?php
-                                $memberDays = floor((time() - strtotime($currentUser['createdAt'])) / (60 * 60 * 24));
-                                echo $memberDays;
-                                ?>
-                            </h3>
+                            <h3 class="mt-2">0</h3>
                             <p class="text-muted mb-0">Days Active</p>
                         </div>
                     </div>

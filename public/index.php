@@ -169,7 +169,7 @@ $db = Database::getInstance();
                         </a>
                     </div>
                     <div class="col-md-3 mb-3">
-                        <a href="<?= getBaseURL() ?>/public/invoices/create.php" class="btn btn-outline-success btn-lg w-100 disabled">
+                        <a href="<?= getBaseURL() ?>/public/invoices/create.php" class="btn btn-outline-success btn-lg w-100">
                             <i class="bi bi-receipt"></i><br>
                             Create Invoice
                         </a>

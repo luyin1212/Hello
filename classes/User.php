@@ -106,7 +106,7 @@ class User {
      * @return bool True if logged in, false otherwise
      */
     public function isLoggedIn() {
-        if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
+        if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
             return true;
         }
         return false;
@@ -209,7 +209,7 @@ class User {
     public function getUserByID($userID) {
         $conn = $this->db->getConnection();
         
-        $sql = "SELECT userID, username, email, role, createdAt FROM user WHERE userID = ?";
+        $sql = "SELECT userID, username, role FROM user WHERE userID = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("i", $userID);
         $stmt->execute();
