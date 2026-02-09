@@ -175,13 +175,13 @@ $db = Database::getInstance();
                         </a>
                     </div>
                     <div class="col-md-3 mb-3">
-                        <a href="#" class="btn btn-outline-info btn-lg w-100 disabled">
+                        <a href="<?= getBaseURL() ?>/public/reports/index.php" class="btn btn-outline-info btn-lg w-100">
                             <i class="bi bi-bar-chart"></i><br>
                             View Reports
                         </a>
                     </div>
                     <div class="col-md-3 mb-3">
-                        <a href="#" class="btn btn-outline-warning btn-lg w-100 disabled">
+                        <a href="<?= getBaseURL() ?>/public/alerts/index.php" class="btn btn-outline-warning btn-lg w-100">
                             <i class="bi bi-bell"></i><br>
                             Check Alerts
                         </a>

@@ -69,11 +69,6 @@ $currentRole = $user->getRole() ?? 'user';
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= getBaseURL() ?>/public/Sales/index.php">
-                        <i class="bi bi-cart-check"></i> Sales
-                    </a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="<?= getBaseURL() ?>/public/invoices/index.php">
                         <i class="bi bi-receipt"></i> Invoices
                     </a>
@@ -86,6 +81,11 @@ $currentRole = $user->getRole() ?? 'user';
                 <li class="nav-item">
                     <a class="nav-link" href="<?= getBaseURL() ?>/public/reports/index.php">
                         <i class="bi bi-graph-up"></i> Reports
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= getBaseURL() ?>/public/settings/index.php">
+                        <i class="bi bi-gear"></i> Settings
                     </a>
                 </li>
             </ul>
@@ -108,6 +108,11 @@ $currentRole = $user->getRole() ?? 'user';
                         <li>
                             <a class="dropdown-item" href="<?= getBaseURL() ?>/public/profile/change-password.php">
                                 <i class="bi bi-key"></i> Change Password
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="<?= getBaseURL() ?>/public/settings/about.php">
+                                <i class="bi bi-info-circle"></i> About
                             </a>
                         </li>
                         <li><hr class="dropdown-divider"></li>
