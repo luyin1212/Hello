@@ -110,11 +110,6 @@ $currentRole = $user->getRole() ?? 'user';
                                 <i class="bi bi-key"></i> Change Password
                             </a>
                         </li>
-                        <li>
-                            <a class="dropdown-item" href="<?= getBaseURL() ?>/public/settings/about.php">
-                                <i class="bi bi-info-circle"></i> About
-                            </a>
-                        </li>
                         <li><hr class="dropdown-divider"></li>
                         <li>
                             <a class="dropdown-item" href="<?= getBaseURL() ?>/public/auth/logout.php">
