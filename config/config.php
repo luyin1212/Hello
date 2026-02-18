@@ -60,7 +60,7 @@ function getBaseURL() {
  * @param string $url The URL to redirect to
  */
 function redirect($url) {
-    header("Location: $url");
+    echo "<script>window.location.href='" . $url . "';</script>";
     exit();
 }
 
@@ -79,7 +79,7 @@ function e($string) {
  * @return string Formatted currency string
  */
 function formatCurrency($amount) {
-    return '£' . number_format($amount, 2);
+    return 'RM' . number_format($amount, 2);
 }
 
 /**
