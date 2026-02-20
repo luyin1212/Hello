@@ -46,6 +46,16 @@ $db = Database::getInstance();
                 <i class="bi bi-people-fill text-primary" style="font-size: 2.5rem;"></i>
                 <h5 class="card-title mt-3">Total Users</h5>
                 <?php
+                    /**
+                     * ALGORITHM: Aggregation - COUNT
+                     * 
+                     * Purpose: Count total number of users
+                     * Algorithm Type: Aggregation (SQL COUNT function)
+                     * Time Complexity: O(n) where n = number of users
+                     * 
+                     * Reference: Elmasri & Navathe (2015)
+                     * Fundamentals of Database Systems, Chapter 8
+                     */
                     $result = $db->query("SELECT COUNT(*) as count FROM user");
                     $row = $result->fetch_assoc();
                     $totalUsers = $row['count'];
@@ -62,6 +72,13 @@ $db = Database::getInstance();
                 <i class="bi bi-box-seam-fill text-success" style="font-size: 2.5rem;"></i>
                 <h5 class="card-title mt-3">Total Products</h5>
                 <?php
+                    /**
+                     * ALGORITHM: Aggregation - COUNT
+                     * 
+                     * Purpose: Count total number of products in inventory
+                     * Algorithm Type: Aggregation (SQL COUNT function)
+                     * Time Complexity: O(n) where n = number of products
+                     */
                     $result = $db->query("SELECT COUNT(*) as count FROM product");
                     $row = $result->fetch_assoc();
                     $totalProducts = $row['count'];
@@ -78,6 +95,13 @@ $db = Database::getInstance();
                 <i class="bi bi-receipt-cutoff text-info" style="font-size: 2.5rem;"></i>
                 <h5 class="card-title mt-3">Total Invoices</h5>
                 <?php
+                    /**
+                     * ALGORITHM: Aggregation - COUNT
+                     * 
+                     * Purpose: Count total number of sales invoices
+                     * Algorithm Type: Aggregation (SQL COUNT function)
+                     * Time Complexity: O(n) where n = number of invoices
+                     */
                     $result = $db->query("SELECT COUNT(*) as count FROM invoice");
                     $row = $result->fetch_assoc();
                     $totalInvoices = $row['count'];
@@ -94,6 +118,15 @@ $db = Database::getInstance();
                 <i class="bi bi-exclamation-triangle-fill text-warning" style="font-size: 2.5rem;"></i>
                 <h5 class="card-title mt-3">Active Alerts</h5>
                 <?php
+                    /**
+                     * ALGORITHM: Aggregation - COUNT
+                     * 
+                     * Purpose: Count active low-stock alerts
+                     * Algorithm Type: Aggregation (SQL COUNT function)
+                     * Time Complexity: O(n) where n = number of alerts
+                     * 
+                     * Note: This demonstrates real-time inventory monitoring
+                     */
                     $result = $db->query("SELECT COUNT(*) as count FROM alert");
                     $row = $result->fetch_assoc();
                     $totalAlerts = $row['count'];

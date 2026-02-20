@@ -35,6 +35,34 @@ $report = $reportObj->generateReport($startDate, $endDate);
     </div>
 </div>
 
+<!-- Quick Links -->
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card border-primary">
+            <div class="card-body">
+                <h5 class="card-title text-primary">
+                    <i class="bi bi-calendar-range"></i> Sales Report
+                </h5>
+                <p class="card-text">Generate detailed sales report for a specific date range</p>
+                <p class="small text-muted mb-0">View below ↓</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card border-info">
+            <div class="card-body">
+                <h5 class="card-title text-info">
+                    <i class="bi bi-graph-up-arrow"></i> ABC Analysis
+                </h5>
+                <p class="card-text">Classify inventory using Pareto Principle (80/20 rule)</p>
+                <a href="<?= getBaseURL() ?>/public/reports/abc-analysis.php" class="btn btn-info">
+                    <i class="bi bi-arrow-right-circle"></i> View ABC Analysis
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Date Range Selector -->
 <div class="card mb-4">
     <div class="card-body">

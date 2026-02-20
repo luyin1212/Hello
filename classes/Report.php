@@ -64,6 +64,10 @@ class Report {
     /**
      * Get total invoices in period
      * 
+     * ALGORITHM: Aggregation - COUNT with Date Range Filter
+     * 
+     * Purpose: Count invoices within specified date range
+     * 
      * @param string $startDate Start date
      * @param string $endDate End date
      * @return int Total invoices
@@ -86,6 +90,8 @@ class Report {
     /**
      * Get total revenue in period
      * 
+     * ALGORITHM: Aggregation - SUM with Date Range Filter
+     * 
      * @param string $startDate Start date
      * @param string $endDate End date
      * @return float Total revenue
@@ -107,6 +113,8 @@ class Report {
     
     /**
      * Get total items sold in period
+     * 
+     * ALGORITHM: Aggregation - SUM with JOIN
      * 
      * @param string $startDate Start date
      * @param string $endDate End date
@@ -131,6 +139,15 @@ class Report {
     
     /**
      * Get top selling products
+     * 
+     * ALGORITHM: Aggregation + Sorting + Limit
+     * 
+     *  Purpose: Identify best-selling products
+     * Process:
+     * 1. GROUP BY productID - aggregate sales per product
+     * 2. SUM(quantitySold) - total units sold
+     * 3. ORDER BY totalSold DESC - sort by sales volume
+     * 4. LIMIT - return top N products
      * 
      * @param string $startDate Start date
      * @param string $endDate End date
@@ -305,5 +322,102 @@ class Report {
     private function exportToCSV($report) {
         // Simplified CSV export
         return "Sales Report - " . $report['period'];
+    }
+    
+    /**
+     * Classify products using ABC Analysis
+     * Based on Pareto Principle (80/20 rule) for inventory management
+     * 
+     * Algorithm Steps:
+     * 1. Calculate total revenue per product
+     * 2. Sort products by revenue (descending)
+     * 3. Calculate cumulative percentage
+     * 4. Classify into categories:
+     *    - Category A: Products contributing to first 70% of revenue (High priority)
+     *    - Category B: Products contributing to next 20% of revenue (Medium priority)
+     *    - Category C: Products contributing to last 10% of revenue (Low priority)
+     * 
+     * Academic Reference:
+     * Pareto, V. (1896). Cours d'économie politique. Lausanne: F. Rouge.
+     * 
+     * Silver, E. A., Pyke, D. F., & Peterson, R. (1998). 
+     * Inventory Management and Production Planning and Scheduling (3rd ed.). 
+     * John Wiley & Sons.
+     * 
+     * @return array Products with ABC classification
+     */
+    public function getABCAnalysis() {
+        $conn = $this->db->getConnection();
+        
+        // Step 1: Get revenue per product from sales data
+        $sql = "SELECT p.productID, 
+                       p.productCode, 
+                       p.name,
+                       p.price,
+                       COALESCE(SUM(s.totalPrice), 0) as totalRevenue,
+                       COALESCE(SUM(s.quantitySold), 0) as totalSold
+                FROM product p
+                LEFT JOIN sale s ON p.productID = s.productID
+                GROUP BY p.productID, p.productCode, p.name, p.price
+                ORDER BY totalRevenue DESC";
+        
+        $result = $conn->query($sql);
+        
+        if (!$result) {
+            return [];
+        }
+        
+        $products = [];
+        $totalRevenue = 0;
+        
+        // Collect all products and calculate total revenue
+        while ($row = $result->fetch_assoc()) {
+            $products[] = $row;
+            $totalRevenue += $row['totalRevenue'];
+        }
+        
+        // If no sales data, return empty
+        if ($totalRevenue == 0) {
+            foreach ($products as &$product) {
+                $product['category'] = 'C';
+                $product['priority'] = 'Low';
+                $product['cumulativePercentage'] = 0;
+                $product['revenuePercentage'] = 0;
+            }
+            return $products;
+        }
+        
+        // Step 2: Calculate cumulative percentage and classify
+        $cumulativeRevenue = 0;
+        
+        foreach ($products as &$product) {
+            $productRevenue = $product['totalRevenue'];
+            $cumulativeRevenue += $productRevenue;
+            
+            // Calculate percentage of total revenue
+            $revenuePercentage = ($productRevenue / $totalRevenue) * 100;
+            $product['revenuePercentage'] = round($revenuePercentage, 2);
+            
+            // Calculate cumulative percentage
+            $cumulativePercentage = ($cumulativeRevenue / $totalRevenue) * 100;
+            $product['cumulativePercentage'] = round($cumulativePercentage, 2);
+            
+            // Step 3: ABC Classification based on Pareto Principle
+            if ($cumulativePercentage <= 70) {
+                $product['category'] = 'A';
+                $product['priority'] = 'High';
+                $product['description'] = 'High-value items (Top 70% revenue)';
+            } elseif ($cumulativePercentage <= 90) {
+                $product['category'] = 'B';
+                $product['priority'] = 'Medium';
+                $product['description'] = 'Medium-value items (Next 20% revenue)';
+            } else {
+                $product['category'] = 'C';
+                $product['priority'] = 'Low';
+                $product['description'] = 'Low-value items (Last 10% revenue)';
+            }
+        }
+        
+        return $products;
     }
 }

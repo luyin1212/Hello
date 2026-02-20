@@ -253,6 +253,16 @@ class Product {
     /**
      * Get products that are low in stock
      * 
+     * ALGORITHM: Filtering with Comparison
+     * 
+     * Purpose: Identify products needing restock
+     * Condition: quantity ≤ reorderLevel
+     * 
+     * Algorithm Type: Conditional selection with sorting
+     * Time Complexity: O(n log n) due to ORDER BY
+     * 
+     * This powers the alert system by identifying low-stock items.
+     * 
      * @return array Array of low stock products
      */
     public function getLowStockProducts() {
@@ -269,7 +279,19 @@ class Product {
     
     /**
      * Update product quantity
-     * Used when sales are made
+     * Used when sales are made or invoices are deleted
+     * 
+     * ALGORITHM: Dynamic Inventory Update
+     * 
+     * Purpose: Modify product stock levels in real-time
+     * Formula: newQuantity = currentQuantity + quantityChange
+     * 
+     * Algorithm Type: Addition/Subtraction with SQL atomic operation
+     * Time Complexity: O(1) - constant time operation
+     * 
+     * Reference: Elmasri & Navathe (2015)
+     * Fundamentals of Database Systems
+     * Chapter 21: Concurrency Control - Atomic Operations
      * 
      * @param int $productID Product ID
      * @param int $quantityChange Change in quantity (negative for sales)
@@ -294,6 +316,11 @@ class Product {
     /**
      * Get total number of products
      * 
+     * ALGORITHM: Aggregation - COUNT
+     * 
+     * Purpose: Count total products in inventory
+     * Time Complexity: O(n) where n = number of products
+     * 
      * @return int Total product count
      */
     public function getTotalProducts() {
@@ -304,6 +331,14 @@ class Product {
     
     /**
      * Get total inventory value
+     * 
+     * ALGORITHM: Aggregation with Multiplication
+     * 
+     * Purpose: Calculate total value of all inventory
+     * Formula: totalValue = Σ(price × quantity) for all products
+     * 
+     * Algorithm Type: SUM with inline multiplication
+     * Time Complexity: O(n) where n = number of products
      * 
      * @return float Total value of all products
      */

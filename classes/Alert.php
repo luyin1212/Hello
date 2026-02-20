@@ -42,11 +42,41 @@ class Alert {
         $conn = $this->db->getConnection();
         $alertCount = 0;
         
+        /**
+         * ALGORITHM: Low Stock Detection (核心算法)
+         * 
+         * Purpose: Automatically identify products needing restock
+         * Condition: quantity ≤ reorderLevel
+         * 
+         * Algorithm Steps:
+         * 1. Query all products where quantity ≤ reorderLevel
+         * 2. For each low-stock product:
+         *    a. Check if alert already exists (avoid duplicates)
+         *    b. If no alert exists, create new alert
+         * 3. Return count of new alerts generated
+         * 
+         * Time Complexity: O(n) where n = number of low-stock products
+         * 
+         * Example:
+         * - Product: HP Printer, Stock: 1, Reorder: 3
+         * - Condition: 1 ≤ 3 → TRUE → Generate alert
+         * 
+         * This is the foundation of the automated monitoring system.
+         */
         // Get all low stock products
         $sql = "SELECT * FROM product WHERE quantity <= reorderLevel";
         $result = $this->db->query($sql);
         
         while ($product = $result->fetch_assoc()) {
+            /**
+             * ALGORITHM: Duplicate Prevention
+             * 
+             * Purpose: Prevent multiple alerts for same product
+             * Logic: Check if alert already exists before creating new one
+             * 
+             * This ensures each product has at most one active alert,
+             * avoiding alert spam.
+             */
             // Check if alert already exists for this product
             $checkSql = "SELECT alertID FROM alert WHERE productID = ?";
             $checkStmt = $conn->prepare($checkSql);
@@ -166,6 +196,11 @@ class Alert {
      * Clear alerts for a specific product
      * Called after product is restocked above reorder level
      * 
+     * ALGORITHM: Conditional Deletion
+     * 
+     * Purpose: Remove alerts when stock is replenished
+     * Logic: Delete all alerts associated with a product
+     * 
      * @param int $productID Product ID
      * @return bool True if cleared successfully
      */
@@ -184,6 +219,13 @@ class Alert {
     
     /**
      * Get total number of active alerts
+     * 
+     * ALGORITHM: Aggregation - COUNT
+     * 
+     * Purpose: Count active low-stock alerts
+     * Time Complexity: O(n) where n = number of alerts
+     * 
+     * Used in Dashboard to display alert count.
      * 
      * @return int Total alerts count
      */

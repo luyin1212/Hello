@@ -52,6 +52,14 @@ class Invoice {
             $invoiceDate = date('Y-m-d');
             $totalAmount = 0;
             
+            /**
+             * ALGORITHM: Accumulation (Sum)
+             * 
+             * Purpose: Calculate total invoice amount
+             * Process: Sum up all individual item totals
+             * Formula: totalAmount = Σ(price × quantity) for all items
+             * Time Complexity: O(n) where n = number of items in invoice
+             */
             // Calculate total amount
             $saleObj = new Sale();
             foreach ($items as $item) {
@@ -163,6 +171,13 @@ class Invoice {
         $conn->begin_transaction();
         
         try {
+            /**
+             * ALGORITHM: Inventory Restoration
+             * 
+             * Purpose: Restore product quantities when invoice is deleted
+             * Process: Delete sales records (triggers inventory restoration in Sale class)
+             * Note: This maintains data consistency - deleted sales restore stock
+             */
             // Delete all sales for this invoice (will restore inventory)
             $saleObj = new Sale();
             if (!$saleObj->deleteSalesByInvoice($invoiceID)) {
@@ -193,6 +208,9 @@ class Invoice {
     
     /**
      * Get total invoices count
+     * 
+     * ALGORITHM: Aggregation - COUNT
+     * Time Complexity: O(n) where n = number of invoices
      * 
      * @return int Total number of invoices
      */

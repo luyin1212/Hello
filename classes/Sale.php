@@ -81,6 +81,22 @@ class Sale {
             $saleID = $conn->insert_id;
             $stmt->close();
             
+            /**
+             * ALGORITHM: Inventory Deduction
+             * 
+             * Purpose: Automatically reduce product stock when sale is recorded
+             * Formula: newQuantity = currentQuantity - quantitySold
+             * 
+             * Algorithm Type: Subtraction with database update
+             * Time Complexity: O(1) - constant time operation
+             * 
+             * Example: If laptop stock is 15, selling 2 units → new stock = 13
+             * 
+             * This ensures real-time inventory accuracy and prevents overselling.
+             * 
+             * Reference: Sommerville (2016), Software Engineering
+             * Chapter 15: Dependability and Security (Data Consistency)
+             */
             // Update product quantity (reduce stock)
             $productObj->updateQuantity($productID, -$quantitySold);
             
@@ -94,6 +110,14 @@ class Sale {
     /**
      * Calculate total price for a sale item
      * Matches CalculateTotal() from Class Diagram
+     * 
+     * ALGORITHM: Multiplication
+     * 
+     * Purpose: Calculate line item total
+     * Formula: totalPrice = unitPrice × quantity
+     * Time Complexity: O(1) - constant time
+     * 
+     * Example: Price RM 100 × Quantity 3 = RM 300
      * 
      * Used during invoice generation to calculate subtotals
      * before recording the sale.
@@ -183,6 +207,29 @@ class Sale {
     public function deleteSalesByInvoice($invoiceID) {
         $conn = $this->db->getConnection();
         
+        /**
+         * ALGORITHM: Inventory Restoration
+         * 
+         * Purpose: Restore product stock when invoice is deleted
+         * Formula: newQuantity = currentQuantity + quantitySold
+         * 
+         * Algorithm Type: Addition with loop iteration
+         * Time Complexity: O(n) where n = number of items in invoice
+         * 
+         * Process:
+         * 1. Get all sale items from the invoice
+         * 2. For each sale item:
+         *    - Add sold quantity back to product stock
+         * 3. Delete sale records
+         * 
+         * Example: If 2 laptops were sold, deleting invoice adds 2 back to stock
+         * 
+         * This maintains data integrity - ensures inventory is always accurate
+         * even when transactions are reversed.
+         * 
+         * Reference: Elmasri & Navathe (2015)
+         * Database Systems - Transaction Management and Data Consistency
+         */
         // First, restore inventory for all sales in this invoice
         $sales = $this->getSalesByInvoice($invoiceID);
         $productObj = new Product();
@@ -205,6 +252,11 @@ class Sale {
     
     /**
      * Get total sales count
+     * 
+     * ALGORITHM: Aggregation - COUNT
+     * 
+     * Purpose: Count total number of sale transactions
+     * Time Complexity: O(n) where n = number of sale records
      * 
      * Returns the total number of sale items in the system.
      * Used for dashboard statistics and reporting.
