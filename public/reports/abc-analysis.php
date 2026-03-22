@@ -87,9 +87,6 @@ foreach ($products as $product) {
                 </div>
             </div>
         </div>
-        <p class="mt-3 mb-0 small">
-            <strong>Reference:</strong> Pareto, V. (1896). <em>Cours d'économie politique.</em> Lausanne: F. Rouge.
-        </p>
     </div>
 </div>
 

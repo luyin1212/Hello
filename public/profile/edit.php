@@ -36,9 +36,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $error = 'Username is already taken.';
         } else {
             // Update user info
-            $sql = "UPDATE user SET username = ?, WHERE userID = ?";
+            $sql = "UPDATE user SET username = ? WHERE userID = ?";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("ssi", $username, $_SESSION['userID']);
+            $stmt->bind_param("si", $username, $_SESSION['userID']);
             
             if ($stmt->execute()) {
                 $_SESSION['username'] = $username; // Update session

@@ -87,11 +87,9 @@ $error = $_GET['error'] ?? '';
                                class="btn btn-primary btn-sm">
                                 <i class="bi bi-plus-circle"></i> Restock Product
                             </a>
-                            <a href="clear.php?id=<?= $alert['alertID'] ?>" 
-                               class="btn btn-outline-secondary btn-sm"
-                               onclick="return confirm('Clear this alert?')">
-                                <i class="bi bi-x-circle"></i> Clear Alert
-                            </a>
+                            <small class="text-muted d-block text-center mt-2">
+                                <i class="bi bi-info-circle"></i> Alert will auto-clear when stock is restocked
+                            </small>
                         </div>
                     </div>
                 </div>

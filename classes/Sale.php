@@ -149,7 +149,7 @@ class Sale {
     public function getSalesByInvoice($invoiceID) {
         $conn = $this->db->getConnection();
         
-        $sql = "SELECT s.*, p.name as productName, p.productCode, p.price as unitPrice 
+        $sql = "SELECT s.*, p.name as productName, p.productCode, p.price as unitprice 
                 FROM sale s 
                 LEFT JOIN product p ON s.productID = p.productID 
                 WHERE s.invoiceID = ? 

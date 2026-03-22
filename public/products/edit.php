@@ -199,20 +199,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <p class="mb-0"><strong>Stock Value:</strong> <?= formatCurrency($product['price'] * $product['quantity']) ?></p>
             </div>
         </div>
-        
-        <div class="card mt-3">
-            <div class="card-header bg-danger text-white">
-                <i class="bi bi-exclamation-triangle"></i> Danger Zone
-            </div>
-            <div class="card-body">
-                <p class="small mb-2">Permanently delete this product from inventory.</p>
-                <a href="delete.php?id=<?= $product['productID'] ?>" 
-                   class="btn btn-danger btn-sm"
-                   onclick="return confirm('Are you sure? This cannot be undone!')">
-                    <i class="bi bi-trash"></i> Delete Product
-                </a>
-            </div>
-        </div>
     </div>
 </div>
 

@@ -83,11 +83,6 @@ $currentRole = $user->getRole() ?? 'user';
                         <i class="bi bi-graph-up"></i> Reports
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<?= getBaseURL() ?>/public/settings/index.php">
-                        <i class="bi bi-gear"></i> Settings
-                    </a>
-                </li>
             </ul>
             
             <!-- User Menu -->

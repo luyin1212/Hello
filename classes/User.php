@@ -209,7 +209,7 @@ class User {
     public function getUserByID($userID) {
         $conn = $this->db->getConnection();
         
-        $sql = "SELECT userID, username, role FROM user WHERE userID = ?";
+        $sql = "SELECT userID, username, password, role FROM user WHERE userID = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("i", $userID);
         $stmt->execute();

@@ -14,7 +14,7 @@ $reportObj = new Report();
 
 // Default date range (last 30 days)
 $endDate = date('Y-m-d');
-$startDate = date('Y-m-d', strtotime('-30 days'));
+$startDate = date('Y-m-d', strtotime('-6 months'));
 
 // Get dates from form if submitted
 if (isset($_GET['startDate']) && isset($_GET['endDate'])) {

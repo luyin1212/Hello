@@ -123,6 +123,25 @@ class Product {
         
         if ($stmt->execute()) {
             $stmt->close();
+
+            /**
+         * ALGORITHM: Automatic Alert Clearance
+         * 
+         * Purpose: Remove low-stock alerts when inventory is restocked
+         * Condition: IF quantity > reorderLevel THEN clear alerts
+         * 
+         * Logic:
+         * When a product is updated with sufficient stock (above reorder level),
+         * automatically clear any existing low-stock alerts for that product.
+         * This prevents outdated alerts from persisting after restocking.
+         */
+        // Auto-clear alerts if stock is now above reorder level
+        if ($quantity > $reorderLevel) {
+            require_once __DIR__ . '/Alert.php';
+            $alertObj = new Alert();
+            $alertObj->clearProductAlerts($productID);
+        }
+        
             return true;
         }
         

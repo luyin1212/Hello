@@ -102,7 +102,7 @@ $success = $_GET['success'] ?? '';
                                 <td><?= e($item['productCode']) ?></td>
                                 <td><?= e($item['productName']) ?></td>
                                 <td class="text-center"><?= $item['quantitySold'] ?></td>
-                                <td class="text-end"><?= formatCurrency($item['price']) ?></td>
+                                <td class="text-end"><?= formatCurrency($item['unitprice']) ?></td>
                                 <td class="text-end"><strong><?= formatCurrency($item['totalPrice']) ?></strong></td>
                             </tr>
                         <?php endforeach; ?>
